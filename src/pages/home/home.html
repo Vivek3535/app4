@@ -1,0 +1,64 @@
+<ion-header>
+  <ion-navbar color="dark">
+    <ion-title>
+      Member Area
+    </ion-title>
+    <ion-buttons end>
+      <button ion-button (click)="logout()">
+        <ion-icon name="log-out"></ion-icon>
+      </button>
+    </ion-buttons>
+  </ion-navbar>
+</ion-header>
+
+<ion-content class="home">
+  <!-- <h3>Welcome in SFC</h3>
+  <p>Your Email is: {{email}}</p> -->  
+  <div class="home-banner"> 
+    <iframe width="100%" height="250" src="https://www.youtube.com/embed/xNikAkGsyp0" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe> 
+  </div> 
+  <div class="schedule_sec">
+      <h2><span>Match Schedule</span></h2>
+    <ul>
+      <li>
+          <img src="assets/imgs/s_1.jpg" alt="img">
+          <b>Sunday 26 June, 2018</b>
+      </li>
+      <li>
+          <img src="assets/imgs/s_2.jpg" alt="img">
+          <b>Sunday 26 June, 2018</b>
+      </li>
+      <li>
+          <img src="assets/imgs/s_3.jpg" alt="img">
+          <b>Sunday 26 June, 2018</b>
+      </li>
+      <li>
+          <img src="assets/imgs/s_4.jpg" alt="img">
+          <b>Sunday 26 June, 2018</b>
+      </li>
+    </ul>
+  </div>
+  <div class="home-blog">
+    <h2><span>Top HeadLines</span></h2>
+    <ion-row class="border-btm">
+      <h3>What is Lorem Ipsum?</h3>
+      <ion-col col-6><img src="assets/imgs/img_1.jpg" alt="img"></ion-col>
+      <ion-col col-6><p>Lorem Ipsum is simply dummy text of the printing and typesetting industry.</p></ion-col>
+    </ion-row>
+    <ion-row class="border-btm">
+        <h3>What is Lorem Ipsum?</h3>
+      <ion-col col-6><p>Lorem Ipsum is simply dummy text of the printing and typesetting industry.</p></ion-col>
+      <ion-col col-6><img src="assets/imgs/img_2.jpg" alt="img"></ion-col>
+    </ion-row>
+    <ion-row class="border-btm">
+        <h3>What is Lorem Ipsum?</h3>
+      <ion-col col-6><img src="assets/imgs/img_1.jpg" alt="img"></ion-col>
+      <ion-col col-6><p>Lorem Ipsum is simply dummy text of the printing and typesetting industry.</p></ion-col>
+    </ion-row>
+    <ion-row class="border-btm">
+        <h3>What is Lorem Ipsum?</h3>
+      <ion-col col-6><p>Lorem Ipsum is simply dummy text of the printing and typesetting industry.</p></ion-col>
+      <ion-col col-6><img src="assets/imgs/img_2.jpg" alt="img"></ion-col>
+    </ion-row>
+  </div>
+</ion-content>
