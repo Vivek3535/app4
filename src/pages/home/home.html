@@ -1,14 +1,14 @@
 <ion-header>
-  <ion-navbar color="dark">
+  <ion-row class="headerbg">
     <ion-title>
-      Member Area
+      <span><img src="assets/imgs/usericon.png" alt="img" style="float: left; width: 30px; margin-right: 8px;"> <b>{{this.userDetails.name}}</b></span>
     </ion-title>
     <ion-buttons end>
       <button ion-button (click)="logout()">
         <ion-icon name="log-out"></ion-icon>
       </button>
     </ion-buttons>
-  </ion-navbar>
+  </ion-row>
 </ion-header>
 
 <ion-content class="home">

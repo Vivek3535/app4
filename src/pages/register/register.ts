@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { NavController, AlertController, IonicPage } from 'ionic-angular';
 import { AuthService } from '../../providers/authservice/authservice';
 import { HomescreenPage } from '../homescreen/homescreen';
+import { FavteamPage } from '../favteam/favteam'
 
 @IonicPage()
 @Component({
@@ -17,13 +18,12 @@ constructor(private navCtrl: NavController, public authService:AuthService, publ
           this.navCtrl.push(HomescreenPage);
       }
       signup(){
-        console.log('teswt');
         this.authService.postData(this.userData,'signup').then((result) => {
          this.responseData = result;
          if(this.responseData.userData){
          console.log(this.responseData);
          localStorage.setItem('userData', JSON.stringify(this.responseData));
-         this.navCtrl.push('HomePage');
+         this.navCtrl.push(FavteamPage);
          }
          else{ console.log("User already exists"); }
        }, (err) => {

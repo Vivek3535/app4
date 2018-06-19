@@ -8,7 +8,7 @@ let apiUrl = 'http://surahi.in/sfc-app/api/';
 export class AuthService {
  
   constructor(public http : Http) {
-    console.log('Hello AuthService Provider');
+    //console.log('Hello AuthService Provider');
   }
 
   postData(credentials, type) {

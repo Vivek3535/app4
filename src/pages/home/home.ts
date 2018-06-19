@@ -32,6 +32,7 @@ export class HomePage {
   this.userPostData.token = this.userDetails.token;
   this.userPostData.lastCreated = "";
     this.noRecords = false
+    console.log(this.userDetails.name);
  
 
 }

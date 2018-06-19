@@ -10,6 +10,7 @@ import { HomescreenPage } from '../pages/homescreen/homescreen';
 import { Login } from '../pages/login/login';
 import { RegisterPage } from '../pages/register/register';  
 import { HomePage } from '../pages/home/home';
+import { FavteamPage } from '../pages/favteam/favteam';
  
 @NgModule({
   declarations: [
@@ -17,7 +18,8 @@ import { HomePage } from '../pages/home/home';
     MyApp, 
     Login,
     RegisterPage,
-    HomePage
+    HomePage,
+    FavteamPage
   ],
   imports: [
     BrowserModule,
@@ -30,7 +32,8 @@ import { HomePage } from '../pages/home/home';
     MyApp,
     Login,
     RegisterPage,
-    HomePage
+    HomePage,
+    FavteamPage
   ],
   providers: [
     StatusBar,

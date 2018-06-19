@@ -8,6 +8,26 @@ page-home {
       width: 100%;
       padding-left: 5px;
     }
+    .headerbg {
+      background: #1b3d72;
+      padding: 8px;
+    }
+    .button-md {
+      background: #fff;
+    padding: 0 10px;
+  }
+  b {
+    font-size: 16px;
+    color: #fff;
+    font-weight: normal;
+    margin-top: 3px;
+    display: inline-block;
+}
+  
+  span.button-inner {
+      color: #000;
+      font-size: 18px;
+  }
     .home-banner img{width:100%; height: auto;}  
     .home-blog p{color: #555; text-align: left;}
     .home-blog .card {margin: 30px; width: calc(100% - 60px);}

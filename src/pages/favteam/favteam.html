@@ -2,97 +2,29 @@
   <div class="headerbg">
     <ion-row class="top-icons">
       <ion-col col-3 col-sm-3 col-md-3 col-lg-3 col-xl-3>
-        <button ion-button icon-left (click) = "backtosfcfav()">
-          <ion-icon name="arrow-back"></ion-icon> Back</button>
+        
       </ion-col>
       <ion-col col-6 col-sm-6 col-md-6 col-lg-6 col-xl-6 text-center>
         <p>Top your favorite team</p>
       </ion-col>
       <ion-col col-3 col-sm-3 col-md-3 col-lg-3 col-xl-3 text-right>
-        <button ion-button icon-right (click) = "backtomain()"> Finish
+        <button ion-button icon-right (click)="favnextPage()"> Finish
           <ion-icon name="arrow-forward"></ion-icon>
         </button>
       </ion-col>
     </ion-row>
   </div>
   <div class="searchbox">
-    <ion-searchbar [(ngModel)]="myInput" [showCancelButton]="shouldShowCancel" (ionInput)="onInput($event)" (ionCancel)="onCancel($event)" placeholder="Search your team hare"></ion-searchbar>
+    <ion-searchbar (ionInput)="filterTechnologies($event.target.value)" placeholder="Search your team hare"></ion-searchbar>
   </div>
   <div class="team-select">
-    <ul>
-      <li><a href="#"><img src="assets/imgs/logo-1.png" alt="WNBA">WNBA</a></li>
-      <li><a href="#"><img src="assets/imgs/logo-2.png" alt="NBA">NBA</a></li>
-      <li><a href="#"><img src="assets/imgs/logo-3.png" alt="NHL">NHL</a></li>
-      <li><a href="#"><img src="assets/imgs/logo-4.png" alt="NFL">NFL</a></li>
-      <li><a href="#"><img src="assets/imgs/logo-5.png" alt="NCAA">NCAA</a></li>
-      <li><a href="#"><img src="assets/imgs/logo-6.png" alt="MLS">MLS</a></li>
-      <li><a href="#"><img src="assets/imgs/logo-7.png" alt="Golf">Golf</a></li>
-    </ul>
-  </div>
-  <div class="team-logos">
-    <ion-grid>
-      <ion-row>
-        <ion-col col-4 col-sm-4 col-md-4 col-lg-4 col-xl-4>
-          <div class="logo-sec">
-            <img src="assets/imgs/teams-1.png" alt="AR Pine Bluff">
-            <p text-center>AR Pine Bluff</p>
-          </div>
-        </ion-col>
-        <ion-col col-4 col-sm-4 col-md-4 col-lg-4 col-xl-4>
-          <div class="logo-sec">
-            <img src="assets/imgs/teams-2.png" alt="Abil Christian">
-            <p text-center>Abil Christian</p>
-          </div>
-        </ion-col>
-        <ion-col col-4 col-sm-4 col-md-4 col-lg-4 col-xl-4>
-          <div class="logo-sec">
-            <img src="assets/imgs/teams-3.png" alt="Air Force">
-            <p text-center>Air Force</p>
-          </div>
-        </ion-col>
-        <ion-col col-4 col-sm-4 col-md-4 col-lg-4 col-xl-4>
-          <div class="logo-sec">
-            <img src="assets/imgs/teams-4.png" alt="Akron">
-            <p text-center>Akron</p>
-          </div>
-        </ion-col>
-        <ion-col col-4 col-sm-4 col-md-4 col-lg-4 col-xl-4>
-          <div class="logo-sec">
-            <img src="assets/imgs/teams-5.png" alt="Alabama">
-            <p text-center>Alabama</p>
-          </div>
-        </ion-col>
-        <ion-col col-4 col-sm-4 col-md-4 col-lg-4 col-xl-4>
-          <div class="logo-sec">
-            <img src="assets/imgs/teams-6.png" alt="Alabama A&M">
-            <p text-center>Alabama A&M</p>
-          </div>
-        </ion-col>
-        <ion-col col-4 col-sm-4 col-md-4 col-lg-4 col-xl-4>
-          <div class="logo-sec">
-            <img src="assets/imgs/teams-7.png" alt="Alabama State">
-            <p text-center>Alabama State</p>
-          </div>
-        </ion-col>
-        <ion-col col-4 col-sm-4 col-md-4 col-lg-4 col-xl-4>
-          <div class="logo-sec">
-            <img src="assets/imgs/teams-8.png" alt="Albany">
-            <p text-center>Albany</p>
-          </div>
-        </ion-col>
-        <ion-col col-4 col-sm-4 col-md-4 col-lg-4 col-xl-4>
-          <div class="logo-sec">
-            <img src="assets/imgs/teams-9.png" alt="Alcorn">
-            <p text-center>Alcorn</p>
-          </div>
-        </ion-col>
-        <ion-col col-4 col-sm-4 col-md-4 col-lg-4 col-xl-4>
-          <div class="logo-sec">
-            <img src="assets/imgs/teams-10.png" alt="Mountaineers">
-            <p text-center>Mountaineers</p>
-          </div>
-        </ion-col>
-      </ion-row>
-    </ion-grid>
+      <div class="logo-sec" *ngFor="let item of items; let i = index">
+        <label>
+          <img [src]="item.image">
+          <p text-center>{{item.name}}</p>
+          <ion-label>{{item.name}}</ion-label>
+          <ion-checkbox [(ngModel)]="item.checked" (ionChange)="getSelectedItems(i,item.name,item.checked)"></ion-checkbox>
+        </label>
+      </div>
   </div>
 </ion-content>
