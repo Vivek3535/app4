@@ -11,15 +11,17 @@ import { Login } from '../pages/login/login';
 import { RegisterPage } from '../pages/register/register';  
 import { HomePage } from '../pages/home/home';
 import { FavteamPage } from '../pages/favteam/favteam';
+import { FollowfriendsPage } from '../pages/followfriends/followfriends';
  
 @NgModule({
-  declarations: [
+  declarations: [  
     HomescreenPage,
     MyApp, 
     Login,
     RegisterPage,
     HomePage,
-    FavteamPage
+    FavteamPage,
+    FollowfriendsPage
   ],
   imports: [
     BrowserModule,
@@ -33,7 +35,8 @@ import { FavteamPage } from '../pages/favteam/favteam';
     Login,
     RegisterPage,
     HomePage,
-    FavteamPage
+    FavteamPage,
+    FollowfriendsPage
   ],
   providers: [
     StatusBar,

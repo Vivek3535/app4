@@ -1,5 +1,5 @@
 <ion-header>
-  <ion-row class="headerbg">
+  <ion-row class="headerbg">     
     <ion-title>
       <span><img src="assets/imgs/usericon.png" alt="img" style="float: left; width: 30px; margin-right: 8px;"> <b>{{this.userDetails.name}}</b></span>
     </ion-title>
@@ -18,6 +18,9 @@
     <iframe width="100%" height="250" src="https://www.youtube.com/embed/xNikAkGsyp0" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe> 
   </div> 
   <div class="schedule_sec">
+      <ion-item *ngFor="let post of posts">
+          <p>{{post.name}}</p>
+        </ion-item>
       <h2><span>Match Schedule</span></h2>
     <ul>
       <li>

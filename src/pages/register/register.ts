@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { NavController, AlertController, IonicPage } from 'ionic-angular';
 import { AuthService } from '../../providers/authservice/authservice';
 import { HomescreenPage } from '../homescreen/homescreen';
-import { FavteamPage } from '../favteam/favteam'
+import { FavteamPage } from '../favteam/favteam';
 
 @IonicPage()
 @Component({

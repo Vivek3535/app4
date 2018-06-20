@@ -34,6 +34,7 @@ export class Login {
     this.authService.postData(this.userData, "login").then((result) =>{
     this.resposeData = result;
     if(this.resposeData.userData){
+      console.log(this.resposeData.userData);
      localStorage.setItem('userData', JSON.stringify(this.resposeData) )
     this.navCtrl.push(HomePage);
   }

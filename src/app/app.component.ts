@@ -1,33 +1,46 @@
+import { Component, ViewChild } from '@angular/core';
+import { Platform, Nav } from 'ionic-angular';
 import { StatusBar } from '@ionic-native/status-bar';
-import { Component } from '@angular/core';
-import { Platform } from 'ionic-angular';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { HomescreenPage } from '../pages/homescreen/homescreen';
-// import { Login } from '../pages/login/login';
-//  import { RegisterPage } from '../pages/register/register'; 
+import { HomePage } from '../pages/home/home';
+import { FollowfriendsPage } from '../pages/followfriends/followfriends';
 
 @Component({
   templateUrl: 'app.html' 
 }) 
 
 export class MyApp {
+  @ViewChild(Nav) nav: Nav;
+  
   rootPage:any = HomescreenPage;
-  // pages: Array<{title: string, component: any}>;
-  constructor(platform: Platform, statusBar: StatusBar, splashScreen: SplashScreen) {  
-    platform.ready().then(() => {
+
+  pages: Array<{title: string, component: any}>;
+  
+  constructor(public platform: Platform, public statusBar: StatusBar, public splashScreen: SplashScreen) {  
+    this.initializeApp(); 
+
+    this.pages = [
+      { title: 'Home', component: HomePage },
+      { title: 'Follow Friends', component: FollowfriendsPage }
+    ];
+
+
+  }
+
+  initializeApp() {
+    this.platform.ready().then(() => {
       // Okay, so the platform is ready and our plugins are available.
       // Here you can do any higher level native things you might need.
-      statusBar.styleDefault();
-   
-      splashScreen.hide();
+      this.statusBar.styleDefault();
+      this.splashScreen.hide();
     });
+  }
   
-
-    // this.pages = [
-    //   { title: 'Login', component: Login },
-    //   { title: 'Register', component: RegisterPage }
-    // ];
-
+  openPage(page) {
+    // Reset the content nav to have just this page
+    // we wouldn't want the back button to show in this scenario
+    this.nav.setRoot(page.component);
   }
 
 }
