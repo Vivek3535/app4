@@ -12,6 +12,7 @@ import { RegisterPage } from '../pages/register/register';
 import { HomePage } from '../pages/home/home';
 import { FavteamPage } from '../pages/favteam/favteam';
 import { FollowfriendsPage } from '../pages/followfriends/followfriends';
+import { ShareService } from '../app/shareservice';
  
 @NgModule({
   declarations: [  
@@ -42,7 +43,8 @@ import { FollowfriendsPage } from '../pages/followfriends/followfriends';
     StatusBar,
     SplashScreen,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
-    AuthService
+    AuthService,
+    ShareService
   ]
 })
 export class AppModule {}

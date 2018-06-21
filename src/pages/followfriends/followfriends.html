@@ -5,14 +5,29 @@
   Ionic pages and navigation.
 -->
 <ion-header>
+ 
+    <ion-row class="headerbg"> 
+      <ion-title>
+          <button ion-button menuToggle>
+              <ion-icon name="menu"></ion-icon> 
+            </button>
+        <span style="margin-top: 6px; display: inline-block; position: relative; top: 5px;"><img src="assets/imgs/usericon.png" alt="img" style="float: left; width: 30px; margin-right: 8px;"> <!-- <b>{{this.userDetails.name}}</b> --></span>
+       
+      </ion-title>
+      <ion-buttons end>
+        <!-- <button ion-button (click)="logout()">
+          <ion-icon name="log-out"></ion-icon>
+        </button> -->
+      </ion-buttons>
+    </ion-row>
+  </ion-header>
 
-  <ion-navbar>
-    <ion-title>followfriends</ion-title>
-  </ion-navbar>
 
-</ion-header>
+<ion-content>
+  
+  <ion-item *ngFor="let post of posts">
+        <span>{{post.name}} <input type="checkbox" value="{{post.name}}" style="float: right;" > </span>
+  </ion-item>
 
-
-<ion-content padding>
 
 </ion-content>

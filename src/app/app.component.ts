@@ -4,7 +4,8 @@ import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { HomescreenPage } from '../pages/homescreen/homescreen';
 import { HomePage } from '../pages/home/home';
-import { FollowfriendsPage } from '../pages/followfriends/followfriends';
+import { FollowfriendsPage } from '../pages/followfriends/followfriends'; 
+import 'rxjs/add/operator/map';
 
 @Component({
   templateUrl: 'app.html' 

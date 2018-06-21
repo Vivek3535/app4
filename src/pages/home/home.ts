@@ -24,22 +24,22 @@ export class HomePage {
     lastCreated: ""
   };
   responseData: any;
-  posts: any;
+  // posts: any;
 
   //userPostData = {"user_id":"","token":""};
-
+  
   constructor(public alertCtrl: AlertController, public nav: NavController, public http: Http, public app: App, public authService:AuthService) {
     const data1 = JSON.parse(localStorage.getItem('userData'));
     this.userDetails = data1.userData;
     this.userPostData.user_id = this.userDetails.user_id;
     this.userPostData.token = this.userDetails.token;
-    this.userPostData.lastCreated = "";
+    this.userPostData.lastCreated = "";  
     this.noRecords = false
-  
+    //shareService.userDetails.name.getUserDataOnEveryPage();
 
-   this.http.get('http://surahi.in/sfc-app/api/getallusers').map(res => res.json()).subscribe(data => {
-       this.posts = data.data;
-    });
+  //  this.http.get('http://surahi.in/sfc-app/api/getallusers').map(res => res.json()).subscribe(data => {
+  //      this.posts = data.data;
+  //   });
 
 
 }

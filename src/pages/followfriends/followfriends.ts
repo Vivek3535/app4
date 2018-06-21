@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { App, IonicPage, NavController, NavParams } from 'ionic-angular';
+import { Http } from '@angular/http';
 
 /**
  * Generated class for the FollowfriendsPage page.
@@ -13,13 +14,36 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
   selector: 'page-followfriends',
   templateUrl: 'followfriends.html',
 })
-export class FollowfriendsPage {
+export class FollowfriendsPage { 
+  posts: any; 
+  map: any;
+  
+  constructor(public navCtrl: NavController, public navParams: NavParams, public http: Http, public app: App) {
+   this.ionViewDidLoad();
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
   }
+
 
   ionViewDidLoad() {
-    console.log('ionViewDidLoad FollowfriendsPage');
+     this.http.get('http://surahi.in/sfc-app/api/getallusers').map(res => res.json()).subscribe(data => {
+       this.posts = data.data;
+    });
+    
   }
+  //selectedItem = [];
+//   onItemClicked(posts){
+//     console.log(posts);
+//     this.selectedItem = posts;
+//     console.log(this.selectedItem);
+//  }
+// onItemClicked(checked, value){
+//   if(checked){
+//     this.selectedItem.push(value);
+//   }else{
 
+//   }
+// }
+  
+
+  
 }
