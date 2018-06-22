@@ -1,4 +1,5 @@
 import { HttpModule } from '@angular/http';
+import { HttpClientModule } from '@angular/common/http';
 import { AuthService } from '../providers/authservice/authservice';
 import { BrowserModule } from '@angular/platform-browser';
 import { ErrorHandler, NgModule } from '@angular/core';
@@ -13,6 +14,8 @@ import { HomePage } from '../pages/home/home';
 import { FavteamPage } from '../pages/favteam/favteam';
 import { FollowfriendsPage } from '../pages/followfriends/followfriends';
 import { ShareService } from '../app/shareservice';
+
+import {Camera} from '@ionic-native/camera';
  
 @NgModule({
   declarations: [  
@@ -27,21 +30,23 @@ import { ShareService } from '../app/shareservice';
   imports: [
     BrowserModule,
     HttpModule,
-    IonicModule.forRoot(MyApp), 
+    HttpClientModule,
+    IonicModule.forRoot(MyApp),
   ], 
   bootstrap: [IonicApp],
   entryComponents: [
-    HomescreenPage,
+    HomescreenPage, 
     MyApp,
     Login,
     RegisterPage,
     HomePage,
     FavteamPage,
-    FollowfriendsPage
+    FollowfriendsPage 
   ],
   providers: [
     StatusBar,
     SplashScreen,
+    Camera,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
     AuthService,
     ShareService

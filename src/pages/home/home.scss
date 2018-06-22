@@ -19,11 +19,20 @@ page-home {
 .headerbg {
   background: #1b3d72;
   padding: 8px;
+  text-align: left;
+  .toolbar-title-md, ion-title {
+    text-align: left;
+}
+
+.toggle_btn_sec {
+  float: left;
+}
   .button-md {
-    background: none;
+    background-color: #1b3d72;
 padding: 0 10px;
 // float: left;
 box-shadow: none;
+float: left;
 
   }
   .ion-md-menu, .ion-md-log-out {
@@ -50,7 +59,7 @@ padding: 0 10px;
           width: 100%;
         }
         p {
-          font-size: 13px;
+          font-size: 12px;
           margin-top: 0;
         }
         .border-btm {

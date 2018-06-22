@@ -2,6 +2,13 @@ page-followfriends {
     .headerbg {
         background: #1b3d72;
         padding: 8px;
+        .toolbar-title-md, ion-title {
+          text-align: left;
+      }
+      
+      .toggle_btn_sec {
+        float: left;
+      }
         .button-md {
           background: none;
       padding: 0 10px;

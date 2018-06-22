@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { App, IonicPage, NavController, NavParams } from 'ionic-angular';
 import { Http } from '@angular/http';
+import { HomePage } from '../home/home';
 
 /**
  * Generated class for the FollowfriendsPage page.
@@ -44,6 +45,16 @@ export class FollowfriendsPage {
 //   }
 // }
   
+newsfeeds(){
+  //  const root = this.app.getRootNav();
+  //  root.popToRoot();
+  this.navCtrl.push(HomePage);
+}
 
+followfrndsPage(){
+  //  const root = this.app.getRootNav();
+  //  root.popToRoot();
+  this.navCtrl.push(FollowfriendsPage);
+}
   
 }
