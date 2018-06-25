@@ -2,7 +2,7 @@ import {Injectable} from '@angular/core';
 import {Http, Headers} from '@angular/http';
 import 'rxjs/add/operator/map';
 
-let apiUrl = 'http://surahi.in/sfc-app/api/';
+let apiUrl = 'http://thelakeonwilshire.com/sfc-app/api/';
 
 @Injectable()
 export class AuthService {

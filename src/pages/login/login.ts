@@ -4,6 +4,7 @@ import { AuthService  } from '../../providers/authservice/authservice';
 import { IonicPage, NavController, LoadingController, AlertController } from 'ionic-angular';
 import { HomePage } from '../home/home';
 import { HomescreenPage } from '../homescreen/homescreen';
+import { ForgotpassPage } from '../forgotpass/forgotpass';
 
 
 @IonicPage()
@@ -22,6 +23,11 @@ export class Login {
   backtomain()
       {
           this.navCtrl.push(HomescreenPage);
+      }
+
+      forGotpassPage()
+      {
+          this.navCtrl.push(ForgotpassPage);
       }
 
   ionViewDidLoad() {

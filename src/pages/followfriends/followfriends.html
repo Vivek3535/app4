@@ -24,11 +24,14 @@
 
 
 <ion-content>
-  
+ 
   <ion-item *ngFor="let post of posts">
-        <span>{{post.name}} <input type="checkbox" value="{{post.name}}" style="float: right;" > </span>
+        <span>{{post.name}} <input type="checkbox" value="{{post.name}}"  (click)="clickSelectBox(post.name)"  style="float: right;" > </span>
   </ion-item>
-
+  <div text-center>
+    <button ion-button round class="bluebtn" (click)="followfriends()">Submit</button>
+  </div>
+ 
 
 </ion-content>
 

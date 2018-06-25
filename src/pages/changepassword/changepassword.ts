@@ -1,10 +1,10 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, LoadingController, NavParams, AlertController, ToastController } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, LoadingController, AlertController, ToastController } from 'ionic-angular';
 
-import { Login } from '../login/login';
+import { HomePage } from '../home/home';
 import { AuthService  } from '../../providers/authservice/authservice';
 /**
- * Generated class for the ForgotpassPage page.
+ * Generated class for the ChangePasswordPage page.
  *
  * See https://ionicframework.com/docs/components/#navigation for more info on
  * Ionic pages and navigation.
@@ -12,32 +12,33 @@ import { AuthService  } from '../../providers/authservice/authservice';
 
 @IonicPage()
 @Component({
-  selector: 'page-forgotpass',
-  templateUrl: 'forgotpass.html',
+  selector: 'page-change-password',
+  templateUrl: 'changepassword.html',
 })
-export class ForgotpassPage {
-	
+export class ChangePasswordPage {
+
 	resposeData : any;
-	userData = {"useremail":""};
+	public currentUser:any;
+	userData = {"useremail":"", "password":"", "newpassword":""};
+	
   constructor(public navCtrl: NavController, public navParams: NavParams, public authService: AuthService, public alertCtrl: AlertController, public loadingCtrl: LoadingController, public toastCtrl: ToastController) {
+	  this.currentUser = localStorage.getItem('userData');
   }
 
   ionViewDidLoad() {
-    console.log('ionViewDidLoad ForgotpassPage');
+    console.log('ionViewDidLoad ChangePasswordPage');
   }
-  backmain()
-  {
-    this.navCtrl.push(Login);
-  }
-
-	forgotpass(){
+	
+	changepass(){
 		this.presentLoading();
-		if(this.userData.useremail){
-			this.authService.postData(this.userData, "forgotpass").then((result) =>{
+		if(this.userData.useremail && this.userData.password && this.userData.newpassword && (this.userData.password != this.userData.newpassword)){
+			this.authService.postData(this.userData, "changepassword").then((result) =>{
 			this.resposeData = result;
-			if(this.resposeData.message){
-				this.presentToast("New password successfully sent to you on mail.");
-				this.navCtrl.push(Login);
+			if(this.resposeData.userData){
+				console.log(this.resposeData.userData);
+				/*localStorage.setItem('userData', JSON.stringify(this.resposeData) )*/
+				this.presentToast("Password Updated successfully.");
+				this.navCtrl.push(HomePage);
 			}
 			else{
 				this.showAlert();

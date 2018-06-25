@@ -1,5 +1,4 @@
 import { HttpModule } from '@angular/http';
-import { HttpClientModule } from '@angular/common/http';
 import { AuthService } from '../providers/authservice/authservice';
 import { BrowserModule } from '@angular/platform-browser';
 import { ErrorHandler, NgModule } from '@angular/core';
@@ -14,8 +13,14 @@ import { HomePage } from '../pages/home/home';
 import { FavteamPage } from '../pages/favteam/favteam';
 import { FollowfriendsPage } from '../pages/followfriends/followfriends';
 import { ShareService } from '../app/shareservice';
+import { ForgotpassPage } from '../pages/forgotpass/forgotpass';
+import { ChangePasswordPage } from '../pages/changepassword/changepassword';
 
 import {Camera} from '@ionic-native/camera';
+import { MomentModule } from 'angular2-moment';
+import { LinkyModule } from 'angular-linky';
+import { Common } from '../providers/common';
+import { SplitPane } from '../providers/split-pane';
  
 @NgModule({
   declarations: [  
@@ -25,13 +30,16 @@ import {Camera} from '@ionic-native/camera';
     RegisterPage,
     HomePage,
     FavteamPage,
-    FollowfriendsPage
+    FollowfriendsPage,
+    ForgotpassPage,
+    ChangePasswordPage
   ],
-  imports: [
+  imports: [ 
     BrowserModule,
     HttpModule,
-    HttpClientModule,
-    IonicModule.forRoot(MyApp),
+    IonicModule.forRoot(MyApp), 
+    MomentModule,
+    LinkyModule
   ], 
   bootstrap: [IonicApp],
   entryComponents: [
@@ -41,12 +49,16 @@ import {Camera} from '@ionic-native/camera';
     RegisterPage,
     HomePage,
     FavteamPage,
-    FollowfriendsPage 
+    FollowfriendsPage,
+    ForgotpassPage,
+    ChangePasswordPage
   ],
   providers: [
     StatusBar,
     SplashScreen,
     Camera,
+    Common,
+    SplitPane,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
     AuthService,
     ShareService

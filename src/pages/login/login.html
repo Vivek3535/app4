@@ -22,7 +22,7 @@
               <ion-list>
                 <ion-input type="text" value="" [(ngModel)]="userData.username"></ion-input>
                 <ion-input type="password" [(ngModel)]="userData.password"></ion-input>
-                  <p><a button href="#forgotpass">Forgot Password?</a></p>
+                  <p><a button (click)="forGotpassPage()">Forgot Password?</a></p>
               
                 <hr>
                 <button ion-button block class="bluebtn" (click)="login()">Login</button>

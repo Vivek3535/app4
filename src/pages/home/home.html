@@ -6,7 +6,7 @@
               <ion-icon name="menu" style="color: #fff; font-size: 2.2em;"></ion-icon> 
             </button>
           </div>
-      <span style="margin-top: 6px; float: left; position: relative; top: 5px;"><img src="assets/imgs/usericon.png" alt="img" style="float: left; width: 30px; margin-right: 8px;"> <b>{{this.userDetails.name}}</b></span>
+      <span style="margin-top: 6px; float: left; position: relative; top: 5px;"><img src="assets/imgs/usericon.png" alt="img" style="float: left; width: 30px; margin-right: 8px;"> <b>{{userDetails.name}}</b></span>
       </ion-title>
         <ion-buttons end>
       <button ion-button (click)="logout()" style="order: 1; background-color: #1b3d72;">
@@ -23,7 +23,30 @@
     <iframe width="100%" height="250" src="https://www.youtube.com/embed/xNikAkGsyp0" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe> 
   </div> 
 
-  
+  <ion-item id="udpateBox">
+    <textarea #updatebox [(ngModel)]="userPostData.feed" autofocus></textarea>
+    <ion-row>
+        <ion-icon ios="ios-send" md="md-send" (click)="feedUpdate()"></ion-icon>
+    </ion-row>
+  </ion-item>
+
+  <ion-card *ngFor="let item of dataSet; let msgIndex = index">
+    <ion-item>
+        <b>{{userDetails.name}}</b>
+      <ion-icon name="trash" item-right (click)="feedDelete(item.feed_id, msgIndex)"></ion-icon>
+      <ion-card-content>
+        <p [innerHTML]="item.feed | linky"></p>
+        <span>{{this.converTime(item.created) | amTimeAgo}}</span>
+      </ion-card-content>
+    </ion-item>
+  </ion-card>
+
+  <ion-card *ngIf="noRecords">
+    <ion-item>
+      No Records
+    </ion-item>
+  </ion-card>
+
   <div class="">
     
 	  <ion-grid>
