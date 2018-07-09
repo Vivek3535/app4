@@ -26,7 +26,14 @@
 <ion-content>
  
   <ion-item *ngFor="let post of posts">
-        <span>{{post.name}} <input type="checkbox" value="{{post.name}}"  (click)="clickSelectBox(post.name)"  style="float: right;" > </span>
+        <span><img src="{{post.image}}" width="50" height="50">{{post.name}} 
+			<div *ngIf="post.checked =='true'">
+				<input type="checkbox" value="{{post.name}}"  (click)="clickSelectBox(post.name)"  style="float: right;" checked="checked">
+			</div>
+			<div *ngIf="post.checked =='false'">
+				<input type="checkbox" value="{{post.name}}"  (click)="clickSelectBox(post.name)"  style="float: right;">
+			</div>
+		</span>
   </ion-item>
   <div text-center>
     <button ion-button round class="bluebtn" (click)="followfriends()">Submit</button>
@@ -40,8 +47,8 @@
       <div style="background: #1c3d71; padding: 10px 0;">
       <ion-icon ios="ios-apps" md="md-apps" (click)="newsfeeds()"><span>News Feed</span></ion-icon>
       <ion-icon ios="ios-people" md="md-people" (click)="followfrndsPage()"><span>Follow Friends</span></ion-icon>
-      <ion-icon ios="ios-camera" md="md-camera" (click)="takePhoto()"><span>Add Video</span></ion-icon>
-      <ion-icon ios="ios-notifications" md="md-notifications"><span>Notifications</span></ion-icon>
+      <ion-icon ios="ios-camera" md="md-camera" (click)="createPost()"><span>Add Video</span></ion-icon>
+      <!-- <ion-icon ios="ios-notifications" md="md-notifications"><span>Notifications</span></ion-icon> -->
       <!-- <ion-icon ios="ios-menu" md="md-menu"><span>More</span></ion-icon> -->
     </div>
     </ion-toolbar>

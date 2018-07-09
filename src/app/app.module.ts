@@ -15,13 +15,23 @@ import { FollowfriendsPage } from '../pages/followfriends/followfriends';
 import { ShareService } from '../app/shareservice';
 import { ForgotpassPage } from '../pages/forgotpass/forgotpass';
 import { ChangePasswordPage } from '../pages/changepassword/changepassword';
+import { CreatePostPage } from '../pages/create-post/create-post';
+import { ProfilePage } from '../pages/profile/profile';
+import { ContestlistPage } from '../pages/contestlist/contestlist';
+import { ContestselectedPage } from '../pages/contestselected/contestselected';
+import { ContestinnerPage } from '../pages/contestinner/contestinner';
+import { RewardsPage } from '../pages/rewards/rewards'; 
 
 import {Camera} from '@ionic-native/camera';
 import { MomentModule } from 'angular2-moment';
 import { LinkyModule } from 'angular-linky';
 import { Common } from '../providers/common';
 import { SplitPane } from '../providers/split-pane';
- 
+import { FileTransfer, FileUploadOptions, FileTransferObject } from '@ionic-native/file-transfer'; 
+import { Geolocation } from '@ionic-native/geolocation';
+import { VideoPlayer } from '@ionic-native/video-player';
+import { SocialSharing } from '@ionic-native/social-sharing';
+
 @NgModule({
   declarations: [  
     HomescreenPage,
@@ -32,7 +42,13 @@ import { SplitPane } from '../providers/split-pane';
     FavteamPage,
     FollowfriendsPage,
     ForgotpassPage,
-    ChangePasswordPage
+    ChangePasswordPage,
+    CreatePostPage,
+	ProfilePage,
+    ContestlistPage,
+    ContestselectedPage,
+    ContestinnerPage,
+	RewardsPage
   ],
   imports: [ 
     BrowserModule,
@@ -51,17 +67,28 @@ import { SplitPane } from '../providers/split-pane';
     FavteamPage,
     FollowfriendsPage,
     ForgotpassPage,
-    ChangePasswordPage
+    ChangePasswordPage,
+    CreatePostPage,
+	ProfilePage,
+    ContestlistPage,
+    ContestselectedPage,
+    ContestinnerPage,
+	RewardsPage
   ],
   providers: [
     StatusBar,
     SplashScreen,
     Camera,
+    FileTransfer,
+    FileTransferObject,
     Common,
+	Geolocation,
+	VideoPlayer,
     SplitPane,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
     AuthService,
-    ShareService
+    ShareService,
+	SocialSharing
   ]
 })
 export class AppModule {}

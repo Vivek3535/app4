@@ -1,12 +1,17 @@
 import { AuthService } from '../../providers/authservice/authservice';
 import { Component, ViewChild } from '@angular/core';
-import { App, NavController, IonicPage, AlertController } from 'ionic-angular';
-import {Camera, CameraOptions} from '@ionic-native/camera';
+import { App, NavController, IonicPage, AlertController, LoadingController, ToastController } from 'ionic-angular';
+import { FileTransfer, FileUploadOptions, FileTransferObject } from '@ionic-native/file-transfer';
+import { Camera, CameraOptions} from '@ionic-native/camera';
 import { Http } from '@angular/http';
 import 'rxjs/add/operator/map';
 import { HomescreenPage } from '../homescreen/homescreen';
+import { CreatePostPage } from '../create-post/create-post';
+import { ProfilePage } from '../profile/profile';
 import { FollowfriendsPage } from '../followfriends/followfriends';
 import { Common } from "../../providers/common";
+import { Geolocation } from '@ionic-native/geolocation';
+import { SocialSharing } from '@ionic-native/social-sharing';
 
 @IonicPage()
 @Component({
@@ -16,8 +21,14 @@ import { Common } from "../../providers/common";
 
 export class HomePage {
   @ViewChild("updatebox") updatebox;
+  public featurevideoposts:any;
+  public matchscheduleposts:any;
+  public topheadlineposts:any;
   public userDetails: any;
+  public imageURI:any;
+  public imageFileName:any;
   public resposeData: any;
+  public resposePostData: any;
   public dataSet: any;
   public photos : any;
   public noRecords: boolean;
@@ -29,19 +40,30 @@ export class HomePage {
     feed_id: "",
     lastCreated: ""
   };
+  winnerData = {
+    name: "",
+    user_id: "",
+    profilePic: "",
+    video: "",
+    expire_date: "",
+  };
   responseData: any;
   mediaFiles = [];
   // posts: any;
   
-  constructor(public alertCtrl: AlertController, public nav: NavController, public http: Http, public app: App, public authService:AuthService, public common: Common, private camera : Camera) {
+  constructor(public alertCtrl: AlertController, public nav: NavController, public http: Http, public app: App, public authService:AuthService, public common: Common, private camera : Camera, public toastCtrl: ToastController, public loadingCtrl: LoadingController, private transfer: FileTransfer,private geolocation: Geolocation,private socialSharing: SocialSharing) {
     const data = JSON.parse(localStorage.getItem('userData'));
     this.userDetails = data.userData;
     this.userPostData.user_id = this.userDetails.user_id;
     this.userPostData.token = this.userDetails.token;
     this.userPostData.lastCreated = "";  
-    this.noRecords = false
+    this.noRecords = false;
     this.getFeed();
-
+    this.getPosts();
+	this.getfeaturevideos();
+    this.getmatchschedules();
+    this.gettopheadlines();
+    this.getWinnerData();
 }
 
 getFeed() {
@@ -58,10 +80,54 @@ getFeed() {
         ].created;
       } else {
         console.log("No access");
+		this.common.closeLoading();
       }
     },
     err => {
       //Connection failed message
+    }
+  );
+}
+
+getWinnerData() {
+  this.authService.postData(this.userPostData, "getwinner").then(
+    result => {
+      this.resposeData = result;
+      if (this.resposeData.data) {
+        this.winnerData.name = this.resposeData.data.name;
+        this.winnerData.user_id = this.resposeData.data.user_id;
+        this.winnerData.profilePic = this.resposeData.data.profilePic;
+        this.winnerData.video = this.resposeData.data.video;
+        this.winnerData.expire_date = this.resposeData.data.expire_date;
+      } else {
+        console.log("No access");
+		/*this.winnerData = "No Winner Found";*/
+      }
+    },
+    err => {
+      //Connection failed message
+	  console.log("No access");
+	  /*this.winnerData = "No Winner Found";*/
+    }
+  );
+}
+
+getPosts() {
+  //this.common.presentLoading();
+	this.authService.postData(this.userPostData, "getposts").then(
+    result => {
+      this.resposePostData = result;
+      if (this.resposePostData.success) {
+        //this.common.closeLoading();
+        this.photos = this.resposePostData.success;
+      } else {
+		this.photos = "No Post Found!";
+        console.log("No access");
+      }
+    },
+    err => {
+      //Connection failed message
+	  console.log("out");
     }
   );
 }
@@ -172,22 +238,114 @@ ngOnInit() {
 }
 
 takePhoto() {
-  const options : CameraOptions = {
+  /*const options : CameraOptions = {
     quality: 50, // picture quality
     destinationType: this.camera.DestinationType.DATA_URL,
     encodingType: this.camera.EncodingType.JPEG,
     mediaType: this.camera.MediaType.PICTURE
-  }
-  this.camera.getPicture(options) .then((imageData) => {
-      this.base64Image = "data:image/jpeg;base64," + imageData;
+  }*/
+	let options = {
+		quality: 100,
+		mediaType: this.camera.MediaType.ALLMEDIA,
+	};
+	this.camera.getPicture(options) .then((imageData) => {
+      /*this.base64Image = "data:image/jpeg;base64," + imageData;
       this.photos.push(this.base64Image);
-      this.photos.reverse();
+      this.photos.reverse();*/
+	  
+		let loading = this.loadingCtrl.create({
+			content: 'Loading Please Wait...'
+		});
+		loading.present();
+		/* Starts Preloader */
+		/*this.presentToast(imageData);*/
+		this.imageFileName = imageData.substring(imageData.lastIndexOf('/')+1);
+		const fileTransfer: FileTransferObject = this.transfer.create();
+		let options11: FileUploadOptions = {
+			fileKey: 'file',
+			fileName: this.imageFileName,
+			params : {"userData":this.userDetails.user_id},
+			headers: {}
+		}
+		fileTransfer.upload(imageData, 'http://sfc.dimensiongraphic.com/sfc-app/api/postsUpload.php', options11, true).then((data) => {
+			/* success
+			/alert("success"); */
+			loading.dismiss();
+			this.resposeData = data;
+			if(this.resposeData.postMedia != ""){
+				/*this.imageURI = data;*/
+				//this.base64Image = JSON.stringify(data);
+				this.photos.push(this.resposeData.postMedia);
+				this.photos.reverse();
+				this.presentToast("Image Uploaded successfully.");
+			}
+			else{
+				this.presentToast("There was an error uploading the file, please try again!");
+			}
+		}, (err) => {
+			// error
+			//alert("error"+JSON.stringify(err));
+			loading.present();
+			this.presentToast(JSON.stringify(err));
+		});
     }, (err) => {
       console.log(err);
     });
 }
 
-deletePhoto(index) {
+likePhoto(ID) {
+	let loading = this.loadingCtrl.create({
+		content: 'Please Wait...'
+	});
+	loading.present();
+	this.userPostData.feed_id = ID;
+	this.authService.postData(this.userPostData, "likepost").then(
+		result => {
+			this.resposeData = result;
+			loading.dismiss();
+			if (this.resposeData.error == 0) {
+				this.presentToast("Like Submitted Successfully!");
+				this.nav.push(HomePage);
+			} else {
+				this.presentToast("Error occurs while submitting like.");
+			}
+		},
+		err => {
+		  //Connection failed message
+		  loading.dismiss();
+		  this.presentToast("Error occurs while submitting like.");
+		}
+	);
+          
+}
+
+sharePhoto(ID) {
+	let loading = this.loadingCtrl.create({
+		content: 'Please Wait...'
+	});
+	loading.present();
+	this.userPostData.feed_id = ID;
+	this.authService.postData(this.userPostData, "sharepost").then(
+		result => {
+			this.resposeData = result;
+			loading.dismiss();
+			if (this.resposeData.error == 0) {
+				this.presentToast("Shared Successfully!");
+				this.nav.push(HomePage);
+			} else {
+				this.presentToast("Error occurs while shareing post.");
+			}
+		},
+		err => {
+		  //Connection failed message
+		  loading.dismiss();
+		  this.presentToast("Error occurs while shareing post.");
+		}
+	);
+          
+}
+
+deletePhoto(ID,index) {
   let confirm = this.alertCtrl.create({
       title: 'Sure you want to delete this photo? There is NO undo!',
       message: '',
@@ -200,8 +358,28 @@ deletePhoto(index) {
         }, {
           text: 'Yes',
           handler: () => {
-            console.log('Agree clicked');
-            this.photos.splice(index, 1);
+			let loading = this.loadingCtrl.create({
+				content: 'Please Wait...'
+			});
+			loading.present();
+			this.userPostData.feed_id = ID;
+			this.authService.postData(this.userPostData, "deletepost").then(
+				result => {
+					loading.dismiss();
+					if (result) {
+						console.log('Agree clicked');
+						this.photos.splice(index, 1);
+						this.presentToast("Post Deleted Successfully!");
+					} else {
+						this.presentToast("Error occurs while deleting post.");
+					}
+				},
+				err => {
+				  //Connection failed message
+				  loading.dismiss();
+				  this.presentToast("Error occurs while deleting post.");
+				}
+			);
           }
         }
       ]
@@ -209,19 +387,101 @@ deletePhoto(index) {
   confirm.present();
 }
 
-// heroes = [];
-//   addHero(newHero: string) {
-//     if (newHero) {
-//       this.heroes.push(newHero);
-//     } 
-//   }
+presentToast(msg) {
+	let toast = this.toastCtrl.create({
+		message: msg,
+		duration: 6000,
+		position: 'bottom'
+	});
+
+	toast.onDidDismiss(() => {
+		console.log('Dismissed toast');
+	});
+
+	toast.present();
+}
+
+comments = [];
+addComment(ID, newComment: string) {
+	if (newComment) {
+		let loading = this.loadingCtrl.create({
+			content: 'Please Wait...'
+		});
+		loading.present();
+		this.userPostData.feed_id = ID;
+		this.userPostData.feed = newComment;
+		this.authService.postData(this.userPostData, "addpostcomment").then(
+			result => {
+				loading.dismiss();
+				this.resposeData = result;
+				if (this.resposeData.error == 0) {
+					this.comments.push(newComment);
+					this.presentToast("Comment added successfully!");
+					this.nav.push(HomePage);
+				} else {
+					this.presentToast("Error occurs while adding post comment.");
+				}
+			},
+			err => {
+			  //Connection failed message
+			  loading.dismiss();
+			  this.presentToast("Error occurs while adding post comment.");
+			}
+		);
+	} 
+}
 
 
-//   deletecomnt($commnt) {
-//     // this.heroes.splice($commnt, 1);
-//     this.heroes.splice(this.heroes.indexOf($commnt),1);
-//   }
+deletecomnt($commnt) {
+	// this.heroes.splice($commnt, 1);
+	this.comments.splice(this.comments.indexOf($commnt),1);
+}
 
+getGeo(){
+	this.geolocation.getCurrentPosition().then((resp) => {
+		let loading = this.loadingCtrl.create({
+			content: 'Please Wait...'
+		});
+		loading.present();
+		this.userPostData.feed = "{Latitude" + resp.coords.latitude +","+ "Longitude" + resp.coords.longitude+"}";
+		this.authService.postData(this.userPostData, "sharegeolocation").then(
+			result => {
+				loading.dismiss();
+				if (result) {
+					this.presentToast("Location Shared successfully!");
+				} else {
+					this.presentToast("Error occurs while sharing your location.");
+				}
+			},
+			err => {
+			  //Connection failed message
+			  loading.dismiss();
+			  this.presentToast("Error occurs while adding post comment.");
+			}
+		);
+	}).catch((error) => {
+		//alert('Error getting location'+JSON.stringify(error));
+		this.presentToast("Error getting location");
+	});
+}
+
+shareInfo(photo) {
+	console.log(photo);
+	//shareViaFacebook(message, image, url)
+	this.socialSharing.share("", null, photo).then(() => {
+	  //console.log("Share By Facebook=> Success");
+	}).catch(() => {
+	  //console.error("Share By Facebook => failed");
+	});
+
+}
+  
+createPost(){
+  //  const root = this.app.getRootNav();
+  //  root.popToRoot();
+  /*this.nav.push(CreatePostPage);*/
+	this.nav.push(ProfilePage);  
+}
 
 backToWelcome(){
   //  const root = this.app.getRootNav();
@@ -245,6 +505,50 @@ followfrndsPage(){
   //  const root = this.app.getRootNav();
   //  root.popToRoot();
   this.nav.push(FollowfriendsPage);
+}
+
+getfeaturevideos() {
+  let loading = this.loadingCtrl.create({
+    content: 'Please Wait...'
+  });
+  loading.present();
+  this.http.get('http://sfc.dimensiongraphic.com/sfc-app/api/getfeaturevideos').map(res => res.json()).subscribe(data => {
+    
+    if(data.featurevideodata)
+    {
+      loading.dismiss();
+      this.featurevideoposts = data.featurevideodata;
+    }
+  });
+}
+
+getmatchschedules() {
+  let loading = this.loadingCtrl.create({
+    content: 'Please Wait...'
+  });
+  loading.present();
+  this.http.get('http://sfc.dimensiongraphic.com/sfc-app/api/getmatchschedules').map(res => res.json()).subscribe(data => {
+  	
+  if(data.matchscheduledata)
+  {
+    loading.dismiss();
+    this.matchscheduleposts = data.matchscheduledata;
+  }
+  });
+}
+gettopheadlines() {
+  let loading = this.loadingCtrl.create({
+    content: 'Please Wait...'
+  });
+  loading.present();
+  this.http.get('http://sfc.dimensiongraphic.com/sfc-app/api/gettopheadlines').map(res => res.json()).subscribe(data => {
+    
+   if(data.topheadlinedata)
+   {
+      loading.dismiss();
+     this.topheadlineposts = data.topheadlinedata;
+   }
+  });
 }
 
 }

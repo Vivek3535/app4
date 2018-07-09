@@ -1,0 +1,66 @@
+<!--
+  Generated template for the ContestselectedPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-content>
+  <div class="headerbg">
+    <ion-row class="top-icons">
+      <ion-col col-3 col-sm-3 col-md-3 col-lg-3 col-xl-3>
+        <button ion-button icon-left (click)="backtocontestlist()">
+          <ion-icon name="arrow-back"></ion-icon>
+          Back
+        </button>
+      </ion-col>
+      <ion-col col-6 col-sm-6 col-md-6 col-lg-6 col-xl-6>
+        <div class="searchbox">
+          <ion-searchbar placeholder="Search here"></ion-searchbar>
+        </div>
+      </ion-col>
+      <ion-col col-3 col-sm-3 col-md-3 col-lg-3 col-xl-3 class="icon-right">
+        <button ion-button>
+          <img class="user-img" src="{{userProfileData.profilePicture}}" alt="user">
+        </button>
+      </ion-col>
+    </ion-row>
+  </div>
+  <div class="contestselected">
+    <div class="box"  *ngFor="let post of posts">
+      <h4>{{post.daysLeft}} Days Left for Winner Announcement</h4>
+      <h3>{{post.title}}</h3>
+    </div>
+  </div>
+  <div class="selected-details">
+    <ion-grid>
+      <ion-row>
+        <ion-col col-6 col-sm-6 col-md-6 col-lg-6 col-xl-6 *ngFor="let challengepost of challengedataSet">
+          <div class="details-box" (click)="gotocontestselect(challengepost.id)">
+              <video *ngIf=" challengepost.challengetype == 'video'" preload="metadata" webkit-playsinline="webkit-playsinline" controls>
+                <source src="{{challengepost.challengeurl}}#t=1" type="video/mp4">
+              </video>
+			  <img *ngIf=" challengepost.challengetype != 'video'" src="{{challengepost.challengeurl}}">
+              <div class="cont-info">
+                <img class="user-img" src="{{challengepost.challengeuserprofile}}" alt="profile">
+                <span>
+                  <h6>{{challengepost.challengeusername}}</h6>
+                  <p>{{challengepost.challengevote}} Votes</p>
+                </span>
+              </div>
+          </div>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </div>
+</ion-content>
+<ion-footer>
+    <ion-toolbar>
+      <div class="footer">
+        <!-- <ion-icon><img src="assets/imgs/footer-share-icon.png" alt="Share"><span>Share</span></ion-icon> -->
+        <ion-icon><img src="assets/imgs/footer-vs-icon.png" alt="Challenge" (click)="backtocontestlist()"><span>Challenge</span></ion-icon>
+        <ion-icon  class="camera"><img src="assets/imgs/footer-camera-icon.png" alt="camera"></ion-icon>
+        <ion-icon><img src="assets/imgs/footer-reward-icon.png" alt="Rewards" (click)="getRewardsPage()"><span>Rewards</span></ion-icon>
+        <!-- <ion-icon><img src="assets/imgs/footer-search-icon.png" alt="Search"><span>Search</span></ion-icon> -->
+      </div>
+    </ion-toolbar>
+  </ion-footer>

@@ -141,3 +141,29 @@ ion-footer {
     line-height: 46px;
     margin-top: 0;
 }
+
+page-profile .teams-box ul {
+    margin: 10px 0;
+}
+page-profile .teams-box ul li {
+    background: #1c3c70;
+    color: #fff;
+    padding: 10px 20px;
+    border-radius: 6px;
+    margin-bottom: 10px;
+}
+page-profile .photovideo ul li {
+    margin: 5px;
+}
+page-profile .photovideo ul li img {
+    border: 1px solid #989898;
+}
+page-profile .friend-box span {
+    float: none;
+    margin-bottom: 10px;
+    display: block;
+}
+.info-one video, .post_media video {
+    height: 220px;
+    margin-top: 20px;
+}

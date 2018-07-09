@@ -1,0 +1,42 @@
+<ion-header>
+  <ion-row class="headerbg" style="padding-top: 10px;"> 
+      <ion-title>
+        <div class="toggle_btn_sec">
+          <button ion-button menuToggle style="order: 1; background-color: #1b3d72;">
+              <ion-icon name="menu" style="color: #fff; font-size: 2.2em;"></ion-icon> 
+            </button>
+          </div>
+      <span style="margin-top: 6px; float: left; position: relative; top: 5px;"><img src="assets/imgs/usericon.png" alt="img" style="float: left; width: 30px; margin-right: 8px;"> <b>{{userDetails.name}}</b></span>
+      </ion-title>
+        <ion-buttons end>
+      <button ion-button (click)="logout()" style="order: 1; background-color: #1b3d72;">
+        <ion-icon name="log-out" style="color: #fff; font-weight: bold; font-size: 2em;"></ion-icon>
+      </button>
+    </ion-buttons>
+  </ion-row>
+</ion-header>
+
+
+<ion-content class="create-post">
+	<div class="">
+		<ion-grid>
+			<ion-row>
+				<h2><span>Post Preview</span></h2>
+				<!-- <img [src]="userPostData.media_url" *ngIf="photo" /> -->
+				<video controls="controls" preload="metadata" autoplay="false" webkit-playsinline="webkit-playsinline" class="videoPlayer">
+					<source src="{{userPostData.media_url}}" type="video/mp4" />
+				</video>
+			</ion-row>
+		</ion-grid>
+	</div>
+</ion-content>
+
+<ion-footer>
+	<ion-toolbar>
+		<div style="background: #1c3d71; padding: 10px 0;">
+			<ion-icon ios="ios-people" md="md-people" (click)="tagFriends()"><span>Tag Friends</span></ion-icon>
+			<ion-icon ios="ios-camera" md="md-camera" (click)="takePhoto()"><span>Add Video/Image</span></ion-icon>
+			<ion-icon ios="ios-locate" md="md-locate" (click)="getGeo()"><span>Geo Location</span></ion-icon>
+		</div>
+	</ion-toolbar>
+</ion-footer>

@@ -11,6 +11,7 @@ import { FavteamPage } from '../favteam/favteam';
 })
 export class RegisterPage {
   responseData : any;
+  createSuccess = false;
   userData = {"username": "","password": "", "name": "","email": ""};
 constructor(private navCtrl: NavController, public authService:AuthService, public alertCtrl: AlertController) { } 
  backtomain()
@@ -25,13 +26,31 @@ constructor(private navCtrl: NavController, public authService:AuthService, publ
          localStorage.setItem('userData', JSON.stringify(this.responseData));
          this.navCtrl.push(FavteamPage);
          }
-         else{ console.log("User already exists"); }
-       }, (err) => {
-         // Error log
-       });
-   
+         else{ this.showPopup("Error", "User already exists.");   }
+       },  error => {
+        this.showPopup("Error", error);
+      });
      }
-   
+	 
+	 showPopup(title, text) {
+      let alert = this.alertCtrl.create({
+        title: title,
+        subTitle: text,
+        buttons: [
+          {
+            text: 'OK',
+            handler: data => {
+              if (this.createSuccess) {
+                this.navCtrl.popToRoot();
+                //this.nav.push('FavteamPage');
+              }
+            }
+          }
+        ]
+      });
+      alert.present(); 
+    }
+	
      login(){
        //Login page link
        this.navCtrl.push('Login');

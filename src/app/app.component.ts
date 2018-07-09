@@ -5,6 +5,7 @@ import { SplashScreen } from '@ionic-native/splash-screen';
 import { HomescreenPage } from '../pages/homescreen/homescreen';
 import { HomePage } from '../pages/home/home';
 import { FollowfriendsPage } from '../pages/followfriends/followfriends'; 
+import { ProfilePage } from '../pages/profile/profile'; 
 import 'rxjs/add/operator/map';
 
 @Component({
@@ -23,7 +24,8 @@ export class MyApp {
 
     this.pages = [
       { title: 'Home', component: HomePage },
-      { title: 'Follow Friends', component: FollowfriendsPage }
+      /*{ title: 'Follow Friends', component: FollowfriendsPage },*/
+      { title: 'Profile', component: ProfilePage }
     ];
 
 

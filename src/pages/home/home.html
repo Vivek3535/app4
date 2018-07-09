@@ -19,11 +19,13 @@
 <ion-content class="home">
   <!-- <h3>Welcome in SFC</h3>
   <p>Your Email is: {{email}}</p> -->  
-  <div class="home-banner"> 
-    <iframe width="100%" height="250" src="https://www.youtube.com/embed/xNikAkGsyp0" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe> 
+  <div class="home-banner" *ngFor="let featurevideo of featurevideoposts"> 
+    <video controls preload="metadata" webkit-playsinline="webkit-playsinline">
+      <source src="{{featurevideo.videourl}}#t=1" type="video/mp4">
+    </video> 
   </div> 
 
-  <ion-item id="udpateBox">
+  <!--<ion-item id="udpateBox">
     <textarea #updatebox [(ngModel)]="userPostData.feed" autofocus></textarea>
     <ion-row>
         <ion-icon ios="ios-send" md="md-send" (click)="feedUpdate()"></ion-icon>
@@ -45,31 +47,66 @@
     <ion-item>
       No Records
     </ion-item>
-  </ion-card>
-
+  </ion-card> -->
+	<div class="last-winner">
+		<ion-grid>
+			<ion-row>
+				<h2><span>Last Week Winner</span></h2>
+				<video controls preload="metadata" webkit-playsinline="webkit-playsinline">
+					<source src="http://sfc.dimensiongraphic.com/sfc-app/api/userProfileImage/12/media/egR5tNsl_trim.46507AB6-D940-4DEE-8001-F8C9782A1B51.MOV#t=1" type="video/mp4">
+				</video>
+			</ion-row>
+		</ion-grid>	
+	</div>
   <div class="">
-    
+		<ion-grid *ngIf="photos=='No Post Found!'">
+			<ion-row style="text-align: center;display: block;margin-top: 10px;">
+				<h2><span>Latest Uploaded Videos</span></h2>
+			  <div style="text-align:center;margin-top:20px;">No posts found!</div>
+			</ion-row>
+		</ion-grid>
 	  <ion-grid>
-		<ion-row>
+		<ion-row *ngIf="photos!='No Post Found!'">
+			<h2><span>Latest Uploaded Videos</span></h2>
 			<ion-col col-12 *ngFor="let photo of photos; let id = index">
-          <h2><span>Latest Uploaded Videos</span></h2>
 				<ion-card class="block">
-          <img [src]="photo" *ngIf="photo" />
-          <div class="comment">
-              <ion-icon ios="ios-thumbs-up" md="md-thumbs-up"></ion-icon>
-              <ion-icon ios="ios-thumbs-down" md="md-thumbs-down"></ion-icon>
-              <ion-icon ios="ios-share-alt" md="md-share-alt"></ion-icon>
-              <ion-icon name="trash" class="deleteIcon" (click)="deletePhoto(id)"></ion-icon>
-          </div>
-          <div class="commnt_input">
-              <ion-item>
-                <ion-input type="text" placeholder="Comment" #newHero
-                (keyup.enter)="addHero(newHero.value); newHero.value=''"
-                (blur)="addHero(newHero.value); newHero.value='' "></ion-input>
-              </ion-item>
-              <ion-icon ios="ios-send" md="md-send"></ion-icon>
-              <ul><li *ngFor="let hero of heroes">{{hero}} <ion-icon name="trash" class="deleteIcon" (click)="deletecomnt();" style="font-size: 16px;"></ion-icon></li></ul>
-          </div>
+				<!-- <img [src]="photo.url" *ngIf="photo" /> -->
+				<div class="create_post">
+					<div class="post_tags">{{photo.tags}}</div>
+					<div class="post_checkedin">{{photo.checkedin}}</div>
+					{{photo.post_desc}}
+					<div class="post_media" *ngIf="photo.type !=''">
+						<video *ngIf="photo.type == 'Video'" controls preload="metadata" webkit-playsinline="webkit-playsinline">
+							<source src="{{photo.media}}#t=1" type="video/mp4">
+						</video>
+						<img *ngIf="photo.type == 'Image'" src="{{photo.media}}">
+					</div>
+				</div>
+				<div class="comment">
+					  {{photo.likes}} <ion-icon ios="ios-thumbs-up" md="md-thumbs-up" name="like" (click)="likePhoto(photo.id)"></ion-icon>
+					  <!-- <ion-icon ios="ios-thumbs-down" md="md-thumbs-down"></ion-icon> -->
+					  {{photo.share}} <ion-icon ios="ios-share-alt" md="md-share-alt" name="share" (click)="sharePhoto(photo.id)"></ion-icon>
+					  <!-- <ion-icon name="trash" class="deleteIcon" (click)="deletePhoto(photo.id,id)"></ion-icon> -->
+					  <ion-icon ios="ios-share" md="md-share" (click)="shareInfo(photo.url)"></ion-icon>
+				</div>
+				<div class="commnt_input">
+					  <ion-item>
+						<ion-input type="text" placeholder="Comment" #newComment
+						(keyup.enter)="addComment(photo.id,newComment.value); newComment.value=''"
+						(blur)="addComment(photo.id,newComment.value); newComment.value='' "></ion-input>
+					  </ion-item>
+					  <ion-icon ios="ios-send" md="md-send"></ion-icon>
+					  <ul>
+						<li *ngFor="let comment of photo.comments">
+							<div class="left"><img src="assets/imgs/user-pro3.jpg" alt="status"></div>
+							<div class="right">
+							  <h6>Test</h6>
+							  <p>{{comment.comment}}</p>
+							  <ion-icon name="trash" class="deleteIcon" (click)="deletecomnt();" style="font-size: 16px;"></ion-icon>
+							</div>
+						</li>
+					  </ul>
+				</div>
 
 				</ion-card>
 			</ion-col>
@@ -80,46 +117,20 @@
   <div class="schedule_sec">
       <h2><span>Match Schedule</span></h2>
     <ul>
-      <li>
-          <img src="assets/imgs/s_1.jpg" alt="img">
-          <b>Sunday 26 June, 2018</b>
+      <li *ngFor="let matchschedule of matchscheduleposts">
+          <img src="{{matchschedule.matchimageurl}}" alt="img">
+          <b>{{matchschedule.matchdate}}</b>
       </li>
-      <li>
-          <img src="assets/imgs/s_2.jpg" alt="img">
-          <b>Sunday 26 June, 2018</b>
-      </li>
-      <li>
-          <img src="assets/imgs/s_3.jpg" alt="img"> 
-          <b>Sunday 26 June, 2018</b>
-      </li>
-      <li>
-          <img src="assets/imgs/s_4.jpg" alt="img">
-          <b>Sunday 26 June, 2018</b>
-      </li>
+      
     </ul>
   </div>
   <div class="home-blog">
     <h2><span>Top HeadLines</span></h2>
-    <ion-row class="border-btm">
-      <h3>Sources: Buccaneers' Jameis Winston faces suspension for first three games</h3>
-      <ion-col col-6><img src="assets/imgs/img_1.jpg" alt="img"></ion-col>
-      <ion-col col-6><p>The NFL is planning to suspend Tampa Bay Buccaneers quarterback Jameis Winston the first three games.</p></ion-col>
-    </ion-row>
-    <ion-row class="border-btm">
-        <h3>Aaron Rodgers' backup battle futile without improvement</h3>
-      <ion-col col-6><p>Although Hundley kept the Packers on the fringes of playoff contention with three victories after Rodgers broke.</p></ion-col>
-      <ion-col col-6><img src="assets/imgs/img_2.jpg" alt="img"></ion-col>
-    </ion-row>
-    <ion-row class="border-btm">
-        <h3>Playing 'Big Nickel,' Patriots value safety position</h3>
-      <ion-col col-6><img src="assets/imgs/img_1.jpg" alt="img"></ion-col>
-      <ion-col col-6><p>It was a base 3-4, and Belichick invested top picks in defensive linemen Richard Seymour (2001, No. 6 overall).</p></ion-col>
-    </ion-row>
-    <ion-row class="border-btm">
-        <h3>Rams another 'Dream Team' Eagles? We'll wait and see</h3>
-      <ion-col col-6><p>LOS ANGELES -- The heightened excitement and the lofty expectations that surround these Los Angeles Rams.</p></ion-col>
-      <ion-col col-6><img src="assets/imgs/img_2.jpg" alt="img"></ion-col>
-    </ion-row>
+    <div class="border-btm" *ngFor="let topheadline of topheadlineposts; let i = index; let odd = odd" [class.odd]="odd">
+      <h3>{{topheadline.headlinetitle}}</h3>
+      <div class="left"><img src="{{topheadline.headlinedimage}}" alt="img"></div>
+      <div class="right"><p>{{topheadline.headlinedescription}}</p></div>
+    </div>
   </div>
 </ion-content>
 <ion-footer>
@@ -127,8 +138,9 @@
     <div style="background: #1c3d71; padding: 10px 0;">
     <ion-icon ios="ios-apps" md="md-apps" (click)="newsfeeds()"><span>News Feed</span></ion-icon>
     <ion-icon ios="ios-people" md="md-people" (click)="followfrndsPage()"><span>Follow Friends</span></ion-icon>
-    <ion-icon ios="ios-camera" md="md-camera" (click)="takePhoto()"><span>Add Video</span></ion-icon>
-    <ion-icon ios="ios-notifications" md="md-notifications"><span>Notifications</span></ion-icon>
+    <ion-icon ios="ios-camera" md="md-camera" (click)="createPost()"><span>Add Video</span></ion-icon>
+    <!-- <ion-icon ios="ios-notifications" md="md-notifications"><span>Notifications</span></ion-icon> -->
+    <!-- <ion-icon ios="ios-locate" md="md-locate" (click)="getGeo()"><span>Geo Location</span></ion-icon> -->
     <!-- <ion-icon ios="ios-menu" md="md-menu"><span>More</span></ion-icon> -->
   </div>
   </ion-toolbar>

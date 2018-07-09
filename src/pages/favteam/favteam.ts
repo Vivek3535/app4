@@ -19,8 +19,15 @@ export class FavteamPage {
   items;
   resposeData: any;
   userData = { "name": "" };
+  public userPostData = {
+    user_id: ""
+  };
+  public userDetails: any;
   constructor(public navCtrl: NavController, public navParams: NavParams, public loadingCtrl: LoadingController, public authService: AuthService, public alertCtrl: AlertController) {
     this.initializeItems();
+	const data = JSON.parse(localStorage.getItem('userData'));
+    this.userDetails = data.userData;
+    this.userPostData.user_id = this.userDetails.user_id;
   }
 
   initializeItems() {
@@ -91,24 +98,40 @@ export class FavteamPage {
     }
   }
 
-  answer: any[] = [];
+  selectteam: any[] = [];
   getSelectedItems(index, value, checked) {
-    if (!Array.isArray(this.answer[index])) {
-      this.answer[index] = [];
+    if (!Array.isArray(this.selectteam[index])) {
+      this.selectteam[index] = [];
     }
     if (checked) {
-      this.answer[index] = value
-      console.log(this.answer);
-
-
+      this.selectteam[index] = value
     } else {
-      this.answer[index].splice(1);
-      console.log(this.answer);
+      this.selectteam[index].splice(1);
+     
     }
   }
 
   favnextPage() {
-    this.navCtrl.push(HomePage);
+    var myteamData = ({"user_id": this.userDetails.user_id,"selectedteams": this.selectteam});
+    //this.navCtrl.push(HomePage);
+    if(myteamData){
+      this.authService.postData(myteamData, "SelectedTeams").then((result) =>{
+      this.resposeData = result;
+     //console.log(this.resposeData);
+      if(this.resposeData){
+       this.navCtrl.push(HomePage);
+    }
+    else{
+      //this.showAlert();
+    }
+     
+      }, (err) => {
+        //Connection failed message
+      });
+     }
+     else{
+      //this.showAlert();
+     }
 
   }
 
